@@ -16,7 +16,6 @@ const opts = {
     },
     channels: [
         process.env.CHANNEL,
-        'alotryx',
         'ludwig'
     ]
 };
@@ -52,16 +51,26 @@ function backseating(backseatMatches, pieceMatches, chessMoveMatches) {
     return false;
 }
 
+function isMod(context) {
+    if (context.mod) return true;
+    if (context.badges)
+        if ('broadcaster' in context.badges) return true;
+
+    return false;
+}
+
 
 function onMessageHandler(target, context, msg, self) {
     if (self) return;
     const message = msg.trim();
     const user = context.username;
+    console.log(msg);
+    console.log(context);
 
     if (user === 'acerola_t' && message == 'ping')
         client.say(target, 'pong');
 
-    if (context.mod || 'broadcaster' in context.badges) {
+    if (isMod(context)) {
         if (message == '!togglebackseat') {
             backseatChecking = !backseatChecking;
             console.log(`* Toggling backseat removal\n\t- ${backseatChecking}`);
