@@ -1,8 +1,11 @@
 const tmi = require('tmi.js');
-const dotenv = require('dotenv');
-const result = dotenv.config();
-if (result.error)
-    throw result.error;
+
+if (ENV['DEPLOYED'] != 'true') {
+    const dotenv = require('dotenv');
+    const result = dotenv.config();
+    if (result.error)
+        throw result.error;
+}
 
 const opts = {
     identity: {
