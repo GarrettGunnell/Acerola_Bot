@@ -22,7 +22,7 @@ client.on('connected', onConnectedHandler);
 client.connect();
 
 const pieceNames = /\bpawn\b|\bknight\b|\bbishop\b|\brook\b|\bking\b|\bqueen\b/gmi;
-const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check/gmi;
+const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block/gmi;
 const chessNotation = /\b[nbkqr]?x?[a-h]{1}[1-8]{1}\b/gmi;
 
 function timeoutUser(target, user) {
@@ -49,9 +49,6 @@ function onMessageHandler(target, context, msg, self) {
     const backseatMatches = message.match(backseatKeywords);
     const pieceMatches = message.match(pieceNames);
     const chessMoveMatches = message.match(chessNotation);
-    console.log(backseatMatches);
-    console.log(pieceMatches);
-    console.log(chessMoveMatches);
     
     if (backseating(backseatMatches, pieceMatches, chessMoveMatches))
         timeoutUser(target, user);
