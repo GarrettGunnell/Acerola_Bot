@@ -15,7 +15,8 @@ const opts = {
         password: process.env.OAUTH
     },
     channels: [
-        process.env.CHANNEL
+        process.env.CHANNEL,
+        'ludwig'
     ]
 };
 
