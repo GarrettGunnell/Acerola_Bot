@@ -1,4 +1,6 @@
 const tmi = require('tmi.js');
+const express = require('express');
+var app = express();
 
 if (process.env.DEPLOYED != 'true') {
     const dotenv = require('dotenv');
@@ -23,9 +25,7 @@ client.on('message', onMessageHandler);
 client.on('connected', onConnectedHandler);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Our app is running on port ${ PORT }`);
-});
+app.listen(PORT);
 
 client.connect();
 
