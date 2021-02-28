@@ -24,6 +24,7 @@ client.connect();
 const pieceNames = /\bpawn[s]?\b|\bknight[s]?\b|\bbishop[s]?\b|\brook[s]?\b|king[s]?\b|\bqueen[s]?\b/gmi;
 const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block|push/gmi;
 const chessNotation = /\b[nbkqr]?x?[a-h]{1}[1-8]{1}\b/gmi;
+backseatChecking = false;
 
 function timeoutUser(target, user) {
     client.say(target, `/timeout ${user} 10`);
@@ -46,12 +47,20 @@ function onMessageHandler(target, context, msg, self) {
     if (self) return;
     const message = msg.trim();
     const user = context.username;
-    const backseatMatches = message.match(backseatKeywords);
-    const pieceMatches = message.match(pieceNames);
-    const chessMoveMatches = message.match(chessNotation);
-    
-    if (backseating(backseatMatches, pieceMatches, chessMoveMatches))
-        timeoutUser(target, user);
+
+    if (message == '!togglebackseat') {
+        backseatChecking = !backseatChecking;
+        console.log(`* Toggling backseat removal\n\t- ${backseatChecking}`);
+    }
+
+    if (backseatChecking) {
+        const backseatMatches = message.match(backseatKeywords);
+        const pieceMatches = message.match(pieceNames);
+        const chessMoveMatches = message.match(chessNotation);
+        
+        if (backseating(backseatMatches, pieceMatches, chessMoveMatches))
+            timeoutUser(target, user);
+    }
 }
 
 
