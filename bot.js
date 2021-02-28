@@ -65,7 +65,6 @@ function onMessageHandler(target, context, msg, self) {
     const message = msg.trim();
     const user = context.username;
     console.log(msg);
-    console.log(context);
 
     if (user === 'acerola_t' && message == 'ping')
         client.say(target, 'pong');
@@ -83,7 +82,7 @@ function onMessageHandler(target, context, msg, self) {
         const pieceMatches = message.match(pieceNames);
         const chessMoveMatches = message.match(chessNotation);
         
-        if (backseating(backseatMatches, pieceMatches, chessMoveMatches))
+        if (backseating(backseatMatches, pieceMatches, chessMoveMatches) && !isMod(context))
             timeoutUser(target, user);
     }
 }
