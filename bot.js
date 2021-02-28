@@ -52,6 +52,7 @@ function onMessageHandler(target, context, msg, self) {
         if (message == '!togglebackseat') {
             backseatChecking = !backseatChecking;
             console.log(`* Toggling backseat removal\n\t- ${backseatChecking}`);
+            client.say(target, `${backseatChecking ? 'Enabled' : 'Disabled'} backseat removal`);
         }
     }
 
