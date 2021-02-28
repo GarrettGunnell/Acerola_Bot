@@ -1,0 +1,25 @@
+{
+  "name": "acerola_bot",
+  "version": "1.0.0",
+  "description": "twitch bot by acerola",
+  "main": "bot.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "tmi.js": "^1.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GarrettGunnell/Acerola_Bot.git"
+  },
+  "author": "Acerola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GarrettGunnell/Acerola_Bot/issues"
+  },
+  "homepage": "https://github.com/GarrettGunnell/Acerola_Bot#readme"
+}
