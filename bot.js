@@ -47,9 +47,8 @@ function onMessageHandler(target, context, msg, self) {
     if (self) return;
     const message = msg.trim();
     const user = context.username;
-    //console.log(context);
 
-    if (context.mod) {
+    if (context.mod || 'broadcaster' in context.badges) {
         if (message == '!togglebackseat') {
             backseatChecking = !backseatChecking;
             console.log(`* Toggling backseat removal\n\t- ${backseatChecking}`);
