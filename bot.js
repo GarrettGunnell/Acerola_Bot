@@ -24,7 +24,7 @@ client.connect();
 const pieceNames = /\bpawn[s]?\b|\bknight[s]?\b|\bbishop[s]?\b|\brook[s]?\b|king[s]?\b|\bqueen[s]?\b/gmi;
 const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block|push/gmi;
 const chessNotation = /\b[nbkqr]?x?[a-h]{1}[1-8]{1}\b|\bO-O\b/gmi;
-backseatChecking = true;
+backseatChecking = false;
 
 function timeoutUser(target, user) {
     client.say(target, `/timeout ${user} 10`);
