@@ -1,6 +1,6 @@
 const tmi = require('tmi.js');
 
-if (ENV['DEPLOYED'] != 'true') {
+if (process.env.DEPLOYED != 'true') {
     const dotenv = require('dotenv');
     const result = dotenv.config();
     if (result.error)
