@@ -27,17 +27,12 @@ function onMessageHandler(target, context, msg, self) {
     console.log(context.username);
     const commandName = msg.trim();
 
-    if (commandName === '!dice') {
-        const num = rollDice();
-        client.say(target, `You rolled a ${num}`);
-        console.log(`* Executed ${commandName} command`);
+    if (commandName == 'timeout') {
+        client.say(target, `/timeout ${context.username} 10`);
+        console.log(`* Timing out ${context.username}`);
     }
 }
 
-function rollDice() {
-    const sides = 6;
-    return Math.floor(Math.random() * sides) + 1;
-}
 
 function onConnectedHandler(addr, port) {
     console.log(`* Connected to ${addr}:${port}`);
