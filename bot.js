@@ -52,10 +52,6 @@ function onMessageHandler(target, context, msg, self) {
     
     if (backseating(backseatMatches, pieceMatches, chessMoveMatches))
         timeoutUser(target, user);
-
-    if (message === 'timeout') {
-        timeoutUser(target, user);
-    }
 }
 
 
