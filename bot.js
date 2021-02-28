@@ -23,14 +23,14 @@ client.connect();
 
 function onMessageHandler(target, context, msg, self) {
     if (self) return;
+    console.log(msg);
+    console.log(context.username);
     const commandName = msg.trim();
 
     if (commandName === '!dice') {
         const num = rollDice();
         client.say(target, `You rolled a ${num}`);
         console.log(`* Executed ${commandName} command`);
-    } else {
-        console.log(`* Unknown command ${commandName}`);
     }
 }
 
