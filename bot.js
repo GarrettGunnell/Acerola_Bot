@@ -22,7 +22,7 @@ client.on('connected', onConnectedHandler);
 client.connect();
 
 const pieceNames = /\bpawn[s]?\b|\bknight[s]?\b|\bbishop[s]?\b|\brook[s]?\b|king[s]?\b|\bqueen[s]?\b/gmi;
-const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block|push/gmi;
+const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block|push|move|pin|pins|pinned|lift|hanging/gmi;
 const chessNotation = /\b[nbkqr]?x?[a-h]{1}[1-8]{1}\b|\bO-O\b/gmi;
 backseatChecking = false;
 
@@ -47,6 +47,9 @@ function onMessageHandler(target, context, msg, self) {
     if (self) return;
     const message = msg.trim();
     const user = context.username;
+
+    if (user === 'acerola_t' && message == 'ping')
+        client.say(target, 'pong');
 
     if (context.mod || 'broadcaster' in context.badges) {
         if (message == '!togglebackseat') {
