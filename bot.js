@@ -21,8 +21,8 @@ client.on('connected', onConnectedHandler);
 
 client.connect();
 
-const pieceNames = /\bpawn\b|\bknight\b|\bbishop\b|\brook\b|\bking\b|\bqueen\b/gmi;
-const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block/gmi;
+const pieceNames = /\bpawn[s]?\b|\bknight[s]?\b|\bbishop[s]?\b|\brook[s]?\b|king[s]?\b|\bqueen[s]?\b/gmi;
+const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block|push/gmi;
 const chessNotation = /\b[nbkqr]?x?[a-h]{1}[1-8]{1}\b/gmi;
 
 function timeoutUser(target, user) {
