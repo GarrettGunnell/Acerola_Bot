@@ -1,5 +1,6 @@
 const tmi = require('tmi.js');
 const express = require('express');
+const fs = require('fs');
 var app = express();
 
 if (process.env.DEPLOYED != 'true') {
@@ -16,7 +17,7 @@ const opts = {
     },
     channels: [
         process.env.CHANNEL,
-        'ludwig'
+        "Ludwig"
     ]
 };
 
@@ -30,13 +31,13 @@ app.listen(PORT);
 
 client.connect();
 
-const pieceNames = /\bpawn[s]?\b|\bknight[s]?\b|\bbishop[s]?\b|\brook[s]?\b|king[s]?\b|\bqueen[s]?\b/gmi;
-const backseatKeywords = /takes|take|mate|missed|checkmate|defend|with|check|block|push|move|pin|pins|pinned|lift|hanging/gmi;
+const pieceNames = /\bpawn[s]?\b|\bknight[s]?\b|\bbishop[s]?\b|\brook[s]?\b|\bking[s]?\b|\bqueen[s]?\b/gmi;
+const backseatKeywords = /\btakes\b|\btake\b|\bmate\b|\bmissed\b|\bcheckmate\b|\bdefend\b|\bwith\b|\bcheck\b1|\bblock\b|\bpush\b|\bmove\b|\bpin\b|\bpins\b|\bpinned\b|\blift\b|\bhanging\b/gmi;
 const chessNotation = /\b[nbkqr]?x?[a-h]{1}[1-8]{1}\b|\bO-O\b/gmi;
-backseatChecking = false;
+backseatChecking = true;
 
 function timeoutUser(target, user) {
-    client.say(target, `/timeout ${user} 10`);
+    //client.say(target, `/timeout ${user} 10`);
     console.log(`* Timing out ${user}`);
 }
 
@@ -64,7 +65,8 @@ function onMessageHandler(target, context, msg, self) {
     if (self) return;
     const message = msg.trim();
     const user = context.username;
-    console.log(msg);
+    //console.log(msg);
+    //console.log(context);
 
     if (user === 'acerola_t' && message == 'ping')
         client.say(target, 'pong');
@@ -82,8 +84,12 @@ function onMessageHandler(target, context, msg, self) {
         const pieceMatches = message.match(pieceNames);
         const chessMoveMatches = message.match(chessNotation);
         
-        if (backseating(backseatMatches, pieceMatches, chessMoveMatches) && !isMod(context))
+        if (backseating(backseatMatches, pieceMatches, chessMoveMatches)) {
+            console.log(`${user}: ${message}`);
             timeoutUser(target, user);
+            const fileOutput = `\n ${user}: ${message}\n[${backseatMatches}] [${pieceMatches}] [${chessMoveMatches}]`;
+            fs.writeFile('./timeouts.txt', fileOutput, { flag: 'a+' }, err => {});
+        }
     }
 }
 
