@@ -16,8 +16,7 @@ const opts = {
         password: process.env.OAUTH
     },
     channels: [
-        process.env.CHANNEL,
-        "Ludwig"
+        process.env.CHANNEL
     ]
 };
 
@@ -32,12 +31,12 @@ app.listen(PORT);
 client.connect();
 
 const pieceNames = /\bpawn[s]?\b|\bknight[s]?\b|\bbishop[s]?\b|\brook[s]?\b|\bking[s]?\b|\bqueen[s]?\b/gmi;
-const backseatKeywords = /\btakes\b|\btake\b|\bmate\b|\bmissed\b|\bcheckmate\b|\bdefend\b|\bwith\b|\bcheck\b1|\bblock\b|\bpush\b|\bmove\b|\bpin\b|\bpins\b|\bpinned\b|\blift\b|\bhanging\b/gmi;
+const backseatKeywords = /\btakes\b|\btake\b|\btrade\b|\bfree\b|\bmate\b|\bmissed\b|\bcheckmate\b|\bdefend\b|\bwith\b|\bcheck\b|\bblock\b|\bpush\b|\bpushed\b|\bmove\b|\bpin\b|\bpins\b|\bpinned\b|\blift\b|\bhanging\b/gmi;
 const chessNotation = /\b[nbkqr]?x?[a-h]{1}[1-8]{1}\b|\bO-O\b/gmi;
-backseatChecking = true;
+backseatChecking = false;
 
 function timeoutUser(target, user) {
-    //client.say(target, `/timeout ${user} 10`);
+    client.say(target, `/timeout ${user} 10`);
     console.log(`* Timing out ${user}`);
 }
 
@@ -70,7 +69,10 @@ function onMessageHandler(target, context, msg, self) {
 
     if (user === 'acerola_t' && message == 'ping')
         client.say(target, 'pong');
-
+    
+    if (message == '!discord' && context['room-id'] == '122163247')
+        client.say(target, "https://discord.gg/FxGQvbfm6Y");
+    
     if (isMod(context)) {
         if (message == '!togglebackseat') {
             backseatChecking = !backseatChecking;
@@ -84,11 +86,11 @@ function onMessageHandler(target, context, msg, self) {
         const pieceMatches = message.match(pieceNames);
         const chessMoveMatches = message.match(chessNotation);
         
-        if (backseating(backseatMatches, pieceMatches, chessMoveMatches)) {
+        if (backseating(backseatMatches, pieceMatches, chessMoveMatches) && !isMod(context)) {
             console.log(`${user}: ${message}`);
             timeoutUser(target, user);
-            const fileOutput = `\n ${user}: ${message}\n[${backseatMatches}] [${pieceMatches}] [${chessMoveMatches}]`;
-            fs.writeFile('./timeouts.txt', fileOutput, { flag: 'a+' }, err => {});
+            //const fileOutput = `\n ${user}: ${message}\n[${backseatMatches}] [${pieceMatches}] [${chessMoveMatches}]`;
+            //fs.writeFile(`./${context['room-id']}.txt`, fileOutput, { flag: 'a+' }, err => {});
         }
     }
 }
